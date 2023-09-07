@@ -1,0 +1,4 @@
+def d = 10.3
+def d= 10
+def x= 10
+extern s=10
