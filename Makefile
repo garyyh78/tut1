@@ -17,7 +17,4 @@ $(TARGET): *.o
 	$(CXX) $(CXXFLAGS) *.o -o $(TARGET)
 
 clean:
-	rm *.o 
-
-test:
-	$(TARGET) < $(TESTDATA)
+	rm *.o $(TARGET)
