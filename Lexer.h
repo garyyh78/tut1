@@ -7,14 +7,19 @@
 class Lexer {
 
 public:
-	Lexer() : lastchar_(' ') {};
-	Lexer(const Lexer&) = delete;
-	Lexer& operator= (const Lexer&) = delete;
+	Lexer() : lastchar_(' ') {}
 
-	void run();
-private:
+	Lexer(const Lexer&) = delete;
+	Lexer(Lexer&&) = delete;
+	Lexer& operator= (const Lexer&) = delete;
+	Lexer& operator= (Lexer&&) = delete;
 
 	int getToken();
+	std::string getIdentifier() const { return identifier_; } 
+	double getNumVal() const { return numval_; } 
+
+private:
+
 	bool isLastCharPartOfNumber() const;
 	bool isNotEndOfLine() const;
 
