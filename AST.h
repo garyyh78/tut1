@@ -63,6 +63,8 @@ private:
 
 };
 
+using ProtoASTUniPtr = std::unique_ptr<PrototypeAST>;
+
 class FunctionAST {
 public:
 	FunctionAST(std::unique_ptr<PrototypeAST> proto,
