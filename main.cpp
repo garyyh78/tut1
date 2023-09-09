@@ -1,8 +1,8 @@
 #include <iostream>
-#include "Lexer.h"
+#include "MainLoop.h"
 
 int main() {
-	Lexer *lexer = new Lexer();
-	lexer->run();
-	delete lexer;
+	MainLoop *mainloop = new MainLoop();
+	mainloop->runMainLoop();
+	delete mainloop;
 }

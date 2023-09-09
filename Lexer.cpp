@@ -2,40 +2,6 @@
 #include"Lexer.h"
 #include"Token.h"
 
-void Lexer::run() {
-	int cur_tok_ = getToken();
-	while(true) {
-		switch(cur_tok_) {
-			case tok_eof:
-				std::cout << "/EOF/\n";
-		   		return;
-		    case ';': // ignore top-level semicolons.
-		    	cur_tok_ = getToken();
-		      	break;
-		    case tok_def:
-				std::cout << "/DEF/ ";
-				cur_tok_ = getToken();
-		    	break;
-		    case tok_extern:
-				std::cout << "/EXTERN/ ";
-				cur_tok_ = getToken();
-		      	break;
-		    case tok_number:
-				std::cout << "/NUM:" << "(" << numval_ << ")/ ";
-				cur_tok_ = getToken();
-	      		break;
-		    case tok_identifier:
-				std::cout << "/ID:" << "(" << identifier_ << ")/ ";
-				cur_tok_ = getToken();
-	      		break;
-			default:
-				std::cout << "/TOK:" << "(" << char(cur_tok_) << ")/ ";
-				cur_tok_ = getToken();
-	      		break;
-    	}
-  	}
-};
-
 bool Lexer::isLastCharPartOfNumber() const {
 	return(isdigit(lastchar_) || lastchar_ == '.');
 };
