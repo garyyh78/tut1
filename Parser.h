@@ -10,9 +10,20 @@ public:
 	~Parser() { delete lexer_; }
 
 	ASTUniPtr parseNumberExpr();
+	ASTUniPtr parseBracketExpr();
+	ASTUniPtr parseExpression();
+	ASTUniPtr parsePrototype();
+	ASTUniPtr parseDefinition();
+	ASTUniPtr parseTopLevelExpr();
+	ASTUniPtr parseExtern();
+	ASTUniPtr parseIdentifierExpr();
+	ASTUniPtr parsePrimary();
+	ASTUniPtr parseBinOpsRHS(int, ASTUniPtr);
+
+	void getNextToken();
 
 private:
-	void getNextToken();
+	int getTokenPrecedence() const;
 
 	ASTUniPtr logError(const std::string& str) const;
 	ProtoASTUniPtr LogErrorProto(const std::string& str) const;

@@ -1,13 +1,13 @@
 #ifndef MAINLOOP_H
 #define MAINLOOP_H
 
-#include"Lexer.h"
+#include "Parser.h"
 
 class MainLoop {
 
 public : 
-	MainLoop(): lexer_(new Lexer()){ } 
-	~MainLoop() { delete lexer_; } 
+	MainLoop(): parser_(new Parserr()){ } 
+	~MainLoop() { delete parser_; } 
 
 	MainLoop(const MainLoop&) = delete;
 	MainLoop(MainLoop&&) = delete;
@@ -17,7 +17,15 @@ public :
 	void runMainLoop() const;
 
 private:
-	Lexer *lexer_;
+
+	void fetchNextToken() const;
+
+	void processDefinition() const;
+	void processExtern() const;
+	void processTopLevelExpression() const;
+	void processIgnoreNoOp() const;
+
+	const Parser *parser_;
 };
 
 #endif

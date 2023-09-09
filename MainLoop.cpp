@@ -1,36 +1,60 @@
-#include<iostream> 
-#include"MainLoop.h"
-#include"Token.h"
+#include <iostream> 
+#include "MainLoop.h"
+#include "Token.h"
+
+void MainLoop::processDefinition() const {
+	if(!parser_->parseDefinition())
+		fetchNextToken();
+}
+
+void MainLoop::processExtern() const {
+	if(!parser_->parseExtern())
+    	fetchNextToken();
+}
+
+void MainLoop::processTopLevelExpression() const {
+	if(!parser_->parseTopLevelExpr())
+    	fetchNextToken();
+}
+
+void MainLoop::processIgnoreNoOp() const {
+	fetchNextToken();
+}
+
+void MainLoop::fectNextToken() const {
+	parser_->fetchNextToken();
+}
 
 void MainLoop::runMainLoop() const {
-	int cur_tok_ = lexer_->getToken();
 	while(true) {
-		switch(cur_tok_) {
+		const int cur_tok = parser_->getCurrentToken();
+		switch(cur_tok) {
 			case tok_eof:
 				std::cout << "/EOF/\n";
 		   		return;
-		    case ';': // ignore top-level semicolons.
-		    	cur_tok_ = lexer_->getToken();
+		    case ';': 
+				std::cout << "/NO-OP/ ";
+		    	processIgnoreNoOp();
 		      	break;
 		    case tok_def:
 				std::cout << "/DEF/ ";
-				cur_tok_ = lexer_->getToken();
+				processDefinition();
 		    	break;
 		    case tok_extern:
 				std::cout << "/EXTERN/ ";
-				cur_tok_ = lexer_->getToken();
+				processExtern();
 		      	break;
 		    case tok_number:
 				std::cout << "/NUM:" << "(" << lexer_->getNumVal() << ")/ ";
-				cur_tok_ = lexer_->getToken();
+				processTopLevelExpression();
 	      		break;
 		    case tok_identifier:
 				std::cout << "/ID:" << "(" << lexer_->getIdentifier() << ")/ ";
-				cur_tok_ = lexer_->getToken();
+				processTopLevelExpression();
 	      		break;
 			default:
-				std::cout << "/TOK:" << "(" << char(cur_tok_) << ")/ ";
-				cur_tok_ = lexer_->getToken();
+				std::cout << "/TOK:" << "(" << char(cur_tok) << ")/ ";
+				processTopLevelExpression();
 	      		break;
     	}
   	}
