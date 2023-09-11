@@ -15,8 +15,8 @@ public:
 	Lexer& operator= (Lexer&&) = delete;
 
 	int getToken();
-	std::string getIdentifier() const { return identifier_; } 
-	double getNumVal() const { return numval_; } 
+	std::string getCurrentId() const { return identifier_; } 
+	double getCurrentNumVal() const { return numval_; } 
 
 private:
 

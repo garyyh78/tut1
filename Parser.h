@@ -1,12 +1,14 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include"AST.h"
-#include"Lexer.h"
+#include <map>
+
+#include "AST.h"
+#include "Lexer.h"
 
 class Parser {
 public:
-	Parser(): lexer( new Lexer() ) {}
+	Parser(): lexer_(new Lexer()) {}
 	~Parser() { delete lexer_; }
 
 	ASTUniPtr parseNumberExpr();
@@ -20,17 +22,22 @@ public:
 	ASTUniPtr parsePrimary();
 	ASTUniPtr parseBinOpsRHS(int, ASTUniPtr);
 
-	void getNextToken();
+	void fetchNextToken();
+	int getCurrentToken() const { return cur_tok_; }
+
+	std::string getCurrentId() const { return lexer_->getCurrentId(); }
+	double getCurrentNumVal() const { return lexer_->getCurrentNumVal(); }
 
 private:
 	int getTokenPrecedence() const;
 
 	ASTUniPtr logError(const std::string& str) const;
-	ProtoASTUniPtr LogErrorProto(const std::string& str) const;
+	ProtoASTUniPtr logErrorProto(const std::string& str) const;
 
 	int cur_tok_;
 	Lexer *lexer_;
-	static std::map<char, int> binaryOpsPrecendence;
+
+	static std::map<char, int> binaryOpsPrec;
 };
 
 #endif

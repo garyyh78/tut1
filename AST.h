@@ -20,7 +20,7 @@ private:
 
 class VarExprAST : public ExprASTBase {
 public:
-	VarExprAST(const std::string name): name_(name) {}
+	VarExprAST(const std::string &name): name_(name) {}
 
 private: 
 	std::string name_;
@@ -41,7 +41,7 @@ private:
 class FuncCallExprAST : public ExprASTBase {
 public:
 	FuncCallExprAST(const std::string &callee,
-				  std::vector<ASTUniPtr> args)
+					std::vector<ASTUniPtr> args)
 	: callee_(callee), args_(std::move(args)) {}
 
 private:
@@ -55,7 +55,7 @@ public:
 				 std::vector<std::string> args)
 	: name_(name), args_(std::move(args)) {}
 
-  const std::string &getName() const { return name_; }
+  const std::string getName() const { return name_; }
 
 private:
   std::string name_;

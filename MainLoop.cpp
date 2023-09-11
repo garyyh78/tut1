@@ -2,30 +2,30 @@
 #include "MainLoop.h"
 #include "Token.h"
 
-void MainLoop::processDefinition() const {
+void MainLoop::processDefinition() {
 	if(!parser_->parseDefinition())
 		fetchNextToken();
 }
 
-void MainLoop::processExtern() const {
+void MainLoop::processExtern() {
 	if(!parser_->parseExtern())
     	fetchNextToken();
 }
 
-void MainLoop::processTopLevelExpression() const {
+void MainLoop::processTopLevelExpression() {
 	if(!parser_->parseTopLevelExpr())
     	fetchNextToken();
 }
 
-void MainLoop::processIgnoreNoOp() const {
+void MainLoop::processIgnoreNoOp() {
 	fetchNextToken();
 }
 
-void MainLoop::fectNextToken() const {
+void MainLoop::fetchNextToken() {
 	parser_->fetchNextToken();
 }
 
-void MainLoop::runMainLoop() const {
+void MainLoop::runMainLoop() {
 	while(true) {
 		const int cur_tok = parser_->getCurrentToken();
 		switch(cur_tok) {
@@ -45,11 +45,11 @@ void MainLoop::runMainLoop() const {
 				processExtern();
 		      	break;
 		    case tok_number:
-				std::cout << "/NUM:" << "(" << lexer_->getNumVal() << ")/ ";
+				std::cout << "/NUM:" << "(" << parser_->getCurrentNumVal() << ")/ ";
 				processTopLevelExpression();
 	      		break;
 		    case tok_identifier:
-				std::cout << "/ID:" << "(" << lexer_->getIdentifier() << ")/ ";
+				std::cout << "/ID:" << "(" << parser_->getCurrentId() << ")/ ";
 				processTopLevelExpression();
 	      		break;
 			default:

@@ -6,7 +6,7 @@
 class MainLoop {
 
 public : 
-	MainLoop(): parser_(new Parserr()){ } 
+	MainLoop(): parser_(new Parser()){ } 
 	~MainLoop() { delete parser_; } 
 
 	MainLoop(const MainLoop&) = delete;
@@ -14,18 +14,17 @@ public :
 	MainLoop& operator= (const MainLoop&) = delete;
 	MainLoop& operator= (MainLoop&&) = delete;
 
-	void runMainLoop() const;
+	void runMainLoop();
 
 private:
 
-	void fetchNextToken() const;
+	void fetchNextToken();
+	void processDefinition();
+	void processExtern();
+	void processTopLevelExpression();
+	void processIgnoreNoOp();
 
-	void processDefinition() const;
-	void processExtern() const;
-	void processTopLevelExpression() const;
-	void processIgnoreNoOp() const;
-
-	const Parser *parser_;
+	Parser *parser_;
 };
 
 #endif
